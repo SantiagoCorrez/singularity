@@ -1,0 +1,946 @@
+/* GENERADO por packages/schema/scripts/gen-types.ts — no editar a mano. */
+export const figureSchema = {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "figure.schema.json",
+  "title": "Figure",
+  "description": "Una cifra con procedencia. El visor se abstiene si falta source, measured_at, un status verificable o una calibración superada.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "label", "value", "unit", "source", "measured_at", "status", "method", "calibration"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "label": { "type": "string", "minLength": 1 },
+    "value": { "type": ["number", "string", "null"] },
+    "unit": { "type": ["string", "null"] },
+    "source": {
+      "type": ["string", "null"],
+      "pattern": "^(audio|letra|youtube|tiktok|google_trends|panel_oyentes|agente:.+|modelo:.+)$"
+    },
+    "measured_at": { "type": ["string", "null"], "format": "date-time" },
+    "status": {
+      "type": "string",
+      "enum": ["medido", "verificado", "heurístico", "pendiente", "no_conectado"]
+    },
+    "method": { "type": ["string", "null"] },
+    "calibration": {
+      "oneOf": [{ "type": "null" }, { "$ref": "#/definitions/Calibration" }]
+    }
+  },
+  "definitions": {
+    "Calibration": {
+      "title": "Calibration",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "metric", "score", "threshold", "n", "passed", "tested_at"],
+      "properties": {
+        "ref": { "type": "string", "minLength": 1 },
+        "metric": { "type": "string", "minLength": 1 },
+        "score": { "type": "number" },
+        "threshold": { "type": "number" },
+        "n": { "type": "integer", "minimum": 0 },
+        "passed": { "type": "boolean" },
+        "tested_at": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+} as const;
+
+export const reportSchema = {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "report.schema.json",
+  "title": "Report",
+  "description": "Reporte de Singularity para una pista: Emoción y trayectoria (1), Tribus agénticas (2) y Neural Scan (3).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "demo",
+    "generated_at",
+    "track",
+    "descriptors",
+    "russell",
+    "dimensions",
+    "dominant",
+    "series",
+    "windows",
+    "envelope",
+    "sections",
+    "markers",
+    "embeddings",
+    "turns",
+    "lyrics",
+    "coherence",
+    "psychographics",
+    "swarm",
+    "tribe_graph",
+    "tribes",
+    "agents",
+    "artist_dna"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "demo": {
+      "type": "boolean",
+      "description": "true = datos simulados; el visor los sella como DEMO."
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "track": {
+      "title": "Track",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "artist",
+        "duration_s",
+        "audio_url"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "artist": {
+          "type": "string"
+        },
+        "duration_s": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "audio_url": {
+          "type": "string"
+        }
+      }
+    },
+    "descriptors": {
+      "title": "Descriptors",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "loudness",
+        "tempo",
+        "key",
+        "brightness",
+        "dynamics",
+        "onset_density",
+        "climax"
+      ],
+      "properties": {
+        "loudness": {
+          "$ref": "figure.schema.json"
+        },
+        "tempo": {
+          "$ref": "figure.schema.json"
+        },
+        "key": {
+          "$ref": "figure.schema.json"
+        },
+        "brightness": {
+          "$ref": "figure.schema.json"
+        },
+        "dynamics": {
+          "$ref": "figure.schema.json"
+        },
+        "onset_density": {
+          "$ref": "figure.schema.json"
+        },
+        "climax": {
+          "$ref": "figure.schema.json"
+        }
+      }
+    },
+    "russell": {
+      "title": "Russell",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "valence",
+        "arousal",
+        "quadrant"
+      ],
+      "properties": {
+        "valence": {
+          "$ref": "figure.schema.json"
+        },
+        "arousal": {
+          "$ref": "figure.schema.json"
+        },
+        "quadrant": {
+          "$ref": "figure.schema.json"
+        }
+      }
+    },
+    "dimensions": {
+      "description": "Las 13 dimensiones (0–100). El id de cada cifra es la clave de la dimensión.",
+      "type": "array",
+      "items": {
+        "$ref": "figure.schema.json"
+      }
+    },
+    "dominant": {
+      "$ref": "figure.schema.json"
+    },
+    "series": {
+      "title": "SeriesProvenance",
+      "description": "Procedencia de las series: emotion gobierna valencia, activación, dimensiones, cuadrantes y giros; energy gobierna la energía y las bandas; structure gobierna los límites de los tramos.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "emotion",
+        "energy",
+        "structure"
+      ],
+      "properties": {
+        "emotion": {
+          "$ref": "figure.schema.json"
+        },
+        "energy": {
+          "$ref": "figure.schema.json"
+        },
+        "structure": {
+          "$ref": "figure.schema.json"
+        }
+      }
+    },
+    "windows": {
+      "type": "array",
+      "items": {
+        "title": "Window",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "t0",
+          "t1",
+          "valence",
+          "arousal",
+          "energy",
+          "dims"
+        ],
+        "properties": {
+          "t0": {
+            "type": "number",
+            "minimum": 0
+          },
+          "t1": {
+            "type": "number",
+            "minimum": 0
+          },
+          "valence": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": -1,
+            "maximum": 1
+          },
+          "arousal": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": -1,
+            "maximum": 1
+          },
+          "energy": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "dims": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            }
+          }
+        }
+      }
+    },
+    "envelope": {
+      "title": "Envelope",
+      "description": "Envolvente de energía a paso fijo, normalizada a [0, 1] respecto al máximo de la pista.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rate_hz",
+        "rms",
+        "low",
+        "mid",
+        "high"
+      ],
+      "properties": {
+        "rate_hz": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "rms": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "low": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "mid": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "high": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "title": "Section",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "label",
+          "t0",
+          "t1",
+          "valence",
+          "arousal",
+          "quadrant",
+          "dominant",
+          "energy"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "t0": {
+            "type": "number",
+            "minimum": 0
+          },
+          "t1": {
+            "type": "number",
+            "minimum": 0
+          },
+          "valence": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": -1,
+            "maximum": 1
+          },
+          "arousal": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": -1,
+            "maximum": 1
+          },
+          "quadrant": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/definitions/Quadrant"
+              }
+            ]
+          },
+          "dominant": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "energy": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "markers": {
+      "type": "array",
+      "items": {
+        "title": "Marker",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "t",
+          "kind",
+          "label"
+        ],
+        "properties": {
+          "t": {
+            "type": "number",
+            "minimum": 0
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "intro",
+              "climax",
+              "chill"
+            ]
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "embeddings": {
+      "$ref": "figure.schema.json"
+    },
+    "turns": {
+      "description": "Giros emocionales: cambios de cuadrante y saltos > 0,4 en valencia o activación entre tramos consecutivos.",
+      "type": "array",
+      "items": {
+        "title": "Turn",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "t",
+          "kind",
+          "from",
+          "to",
+          "delta"
+        ],
+        "properties": {
+          "t": {
+            "type": "number",
+            "minimum": 0
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "quadrant",
+              "valence",
+              "arousal"
+            ]
+          },
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "delta": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "lyrics": {
+      "description": "Emoción de la letra por tramo. null = no hay letra.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "title": "Lyrics",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "provenance",
+            "valence",
+            "arousal",
+            "sections"
+          ],
+          "properties": {
+            "provenance": {
+              "$ref": "figure.schema.json"
+            },
+            "valence": {
+              "$ref": "figure.schema.json"
+            },
+            "arousal": {
+              "$ref": "figure.schema.json"
+            },
+            "sections": {
+              "type": "array",
+              "items": {
+                "title": "LyricSection",
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "section_id",
+                  "valence",
+                  "arousal",
+                  "dims",
+                  "theme"
+                ],
+                "properties": {
+                  "section_id": {
+                    "type": "string"
+                  },
+                  "valence": {
+                    "type": "number",
+                    "minimum": -1,
+                    "maximum": 1
+                  },
+                  "arousal": {
+                    "type": "number",
+                    "minimum": -1,
+                    "maximum": 1
+                  },
+                  "dims": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  },
+                  "theme": {
+                    "type": "string",
+                    "description": "De qué habla la letra en este tramo, en pocas palabras."
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "coherence": {
+      "description": "Coherencia letra ↔ sonido. null = no se pudo calcular.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "title": "Coherence",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "overall",
+            "explanation",
+            "sections"
+          ],
+          "properties": {
+            "overall": {
+              "$ref": "figure.schema.json"
+            },
+            "explanation": {
+              "$ref": "figure.schema.json"
+            },
+            "sections": {
+              "type": "array",
+              "items": {
+                "title": "CoherenceSection",
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "section_id",
+                  "score",
+                  "label"
+                ],
+                "properties": {
+                  "section_id": {
+                    "type": "string"
+                  },
+                  "score": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "label": {
+                    "type": "string",
+                    "enum": [
+                      "COHERENTE",
+                      "TENSION_CREATIVA",
+                      "CONTRASTE_DELIBERADO"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "psychographics": {
+      "description": "Perfil de audiencia. Cada cifra se abstiene por separado.",
+      "type": "array",
+      "items": {
+        "$ref": "figure.schema.json"
+      }
+    },
+    "swarm": {
+      "description": "Estado del enjambre: qué herramienta respondió, con qué latencia y de qué fecha son sus datos.",
+      "type": "array",
+      "items": {
+        "title": "SwarmStatus",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "agent",
+          "label",
+          "tool",
+          "status",
+          "latency_ms",
+          "data_date",
+          "detail"
+        ],
+        "properties": {
+          "agent": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "tool": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "no_conectado",
+              "error"
+            ]
+          },
+          "latency_ms": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "data_date": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "detail": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tribe_graph": {
+      "title": "TribeGraph",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provenance",
+        "nodes",
+        "edges"
+      ],
+      "properties": {
+        "provenance": {
+          "$ref": "figure.schema.json"
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "title": "TribeNode",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "kind",
+              "label",
+              "reach",
+              "quadrant",
+              "source",
+              "measured_at"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "song",
+                  "tribe",
+                  "playlist",
+                  "curator",
+                  "artist"
+                ]
+              },
+              "label": {
+                "type": "string"
+              },
+              "reach": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1,
+                "description": "Alcance relativo al mayor nodo del grafo."
+              },
+              "quadrant": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "#/definitions/Quadrant"
+                  }
+                ]
+              },
+              "source": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "measured_at": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "title": "TribeEdge",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source",
+              "target",
+              "similarity"
+            ],
+            "properties": {
+              "source": {
+                "type": "string"
+              },
+              "target": {
+                "type": "string"
+              },
+              "similarity": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "tribes": {
+      "type": "array",
+      "items": {
+        "title": "Tribe",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "affinity",
+          "size",
+          "growth_90d",
+          "emotion"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "affinity": {
+            "$ref": "figure.schema.json"
+          },
+          "size": {
+            "$ref": "figure.schema.json"
+          },
+          "growth_90d": {
+            "$ref": "figure.schema.json"
+          },
+          "emotion": {
+            "$ref": "figure.schema.json"
+          }
+        }
+      }
+    },
+    "agents": {
+      "type": "array",
+      "items": {
+        "title": "Agent",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "label",
+          "kind",
+          "findings",
+          "reading",
+          "recommendation",
+          "score"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "data",
+              "risk",
+              "perspective"
+            ]
+          },
+          "findings": {
+            "type": "array",
+            "items": {
+              "$ref": "figure.schema.json"
+            }
+          },
+          "reading": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "figure.schema.json"
+              }
+            ]
+          },
+          "recommendation": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "figure.schema.json"
+              }
+            ]
+          },
+          "score": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "figure.schema.json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "artist_dna": {
+      "title": "ArtistDna",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "consistency",
+        "evolution",
+        "recurring_tribes",
+        "gaps",
+        "tracks"
+      ],
+      "properties": {
+        "consistency": {
+          "$ref": "figure.schema.json"
+        },
+        "evolution": {
+          "$ref": "figure.schema.json"
+        },
+        "recurring_tribes": {
+          "$ref": "figure.schema.json"
+        },
+        "gaps": {
+          "$ref": "figure.schema.json"
+        },
+        "tracks": {
+          "type": "array",
+          "items": {
+            "title": "DnaTrack",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "track_id",
+              "title",
+              "analyzed_at",
+              "valence",
+              "arousal",
+              "quadrant"
+            ],
+            "properties": {
+              "track_id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "analyzed_at": {
+                "type": "string"
+              },
+              "valence": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "arousal": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "quadrant": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "#/definitions/Quadrant"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Quadrant": {
+      "title": "Quadrant",
+      "type": "string",
+      "enum": [
+        "FIESTA",
+        "CHILL",
+        "DEFIANCE",
+        "NOSTALGICA"
+      ]
+    }
+  }
+} as const;

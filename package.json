@@ -1,0 +1,13 @@
+{
+  "name": "singularity",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev": "npm run dev -w @singularity/web",
+    "build": "npm run build -w @singularity/web",
+    "test": "npm run test -w @singularity/web",
+    "typecheck": "npm run typecheck -w @singularity/web",
+    "gen:types": "npm run gen:types -w @singularity/schema",
+    "gen:demo": "npm run gen:demo -w @singularity/web"
+  }
+}

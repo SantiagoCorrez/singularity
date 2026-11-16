@@ -1,0 +1,13 @@
+{
+  "name": "@singularity/schema",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "gen:types": "tsx scripts/gen-types.ts"
+  },
+  "devDependencies": {
+    "json-schema-to-typescript": "^15.0.4",
+    "tsx": "^4.19.2"
+  }
+}

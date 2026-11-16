@@ -1,0 +1,110 @@
+{
+  "loudness": {
+    "method": "sonoridad integrada ITU-R BS.1770-4 (pyloudnorm) · v1",
+    "calibration": {
+      "ref": "sintético: senoidales de 997 Hz de nivel conocido (BS.1770)",
+      "metric": "MAE",
+      "score": 0.042,
+      "threshold": 0.5,
+      "n": 7,
+      "passed": true,
+      "tested_at": "2026-11-15T01:56:35Z"
+    }
+  },
+  "tempo": {
+    "method": "seguimiento de pulso (librosa.beat), tempo por intervalo medio entre pulsos · v2",
+    "calibration": {
+      "ref": "sintético: pistas de percusión de 70 a 170 BPM",
+      "metric": "Acc1",
+      "score": 1.0,
+      "threshold": 0.8,
+      "n": 11,
+      "passed": true,
+      "tested_at": "2026-11-15T01:56:39Z"
+    }
+  },
+  "key": {
+    "method": "croma CQT + perfiles Krumhansl-Schmuckler · v1",
+    "calibration": {
+      "ref": "sintético: progresiones I–IV–V–I en las 24 tonalidades",
+      "metric": "exactitud",
+      "score": 1.0,
+      "threshold": 0.8,
+      "n": 24,
+      "passed": true,
+      "tested_at": "2026-11-15T01:56:46Z"
+    }
+  },
+  "brightness": {
+    "method": "centroide espectral medio ponderado por energía (librosa) · v1",
+    "calibration": {
+      "ref": "sintético: senoidales de 220 Hz a 6 kHz",
+      "metric": "MAE",
+      "score": 1.408,
+      "threshold": 60.0,
+      "n": 7,
+      "passed": true,
+      "tested_at": "2026-11-15T01:56:46Z"
+    }
+  },
+  "dynamics": {
+    "method": "rango de sonoridad tipo EBU R128 LRA, ventanas de 3 s · v1",
+    "calibration": {
+      "ref": "sintético: ruido a dos niveles con diferencia conocida",
+      "metric": "MAE",
+      "score": 0.062,
+      "threshold": 1.0,
+      "n": 5,
+      "passed": true,
+      "tested_at": "2026-11-15T01:56:47Z"
+    }
+  },
+  "onset_density": {
+    "method": "detección de ataques por flujo espectral (librosa.onset) · v1",
+    "calibration": {
+      "ref": "sintético: golpes a ritmo conocido (1 a 6 por segundo)",
+      "metric": "MAE",
+      "score": 0.05,
+      "threshold": 0.5,
+      "n": 5,
+      "passed": true,
+      "tested_at": "2026-11-15T01:56:47Z"
+    }
+  },
+  "climax": {
+    "method": "centro de la ventana de 5 s con más energía RMS · v1",
+    "calibration": {
+      "ref": "sintético: ruido con un máximo de energía en un instante conocido",
+      "metric": "MAE",
+      "score": 0.062,
+      "threshold": 2.5,
+      "n": 5,
+      "passed": true,
+      "tested_at": "2026-11-15T01:56:48Z"
+    }
+  },
+  "energy": {
+    "method": "RMS por STFT (2048/512) remuestreado a 20 Hz; bandas < 250 Hz, 250 Hz–4 kHz, > 4 kHz · v1",
+    "calibration": {
+      "ref": "sintético: senoidal a escalones de amplitud conocida",
+      "metric": "MAE",
+      "score": 0.0,
+      "threshold": 0.05,
+      "n": 5,
+      "passed": true,
+      "tested_at": "2026-11-15T01:56:48Z"
+    }
+  },
+  "structure": {
+    "method": "novedad de Foote sobre auto-similitud de croma + MFCC (0,5 s); nombres de tramo por reglas · v1",
+    "calibration": {
+      "ref": "sintético: 8 canciones generadas con límites de tramo conocidos (±3 s)",
+      "metric": "F1",
+      "score": 0.902,
+      "threshold": 0.7,
+      "n": 44,
+      "passed": true,
+      "tested_at": "2026-11-15T01:57:00Z"
+    }
+  }
+}

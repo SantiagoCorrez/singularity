@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "figure.schema.json",
+  "title": "Figure",
+  "description": "Una cifra con procedencia. El visor se abstiene si falta source, measured_at, un status verificable o una calibración superada.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "label", "value", "unit", "source", "measured_at", "status", "method", "calibration"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "label": { "type": "string", "minLength": 1 },
+    "value": { "type": ["number", "string", "null"] },
+    "unit": { "type": ["string", "null"] },
+    "source": {
+      "type": ["string", "null"],
+      "pattern": "^(audio|letra|youtube|tiktok|google_trends|panel_oyentes|agente:.+|modelo:.+)$"
+    },
+    "measured_at": { "type": ["string", "null"], "format": "date-time" },
+    "status": {
+      "type": "string",
+      "enum": ["medido", "verificado", "heurístico", "pendiente", "no_conectado"]
+    },
+    "method": { "type": ["string", "null"] },
+    "calibration": {
+      "oneOf": [{ "type": "null" }, { "$ref": "#/definitions/Calibration" }]
+    }
+  },
+  "definitions": {
+    "Calibration": {
+      "title": "Calibration",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "metric", "score", "threshold", "n", "passed", "tested_at"],
+      "properties": {
+        "ref": { "type": "string", "minLength": 1 },
+        "metric": { "type": "string", "minLength": 1 },
+        "score": { "type": "number" },
+        "threshold": { "type": "number" },
+        "n": { "type": "integer", "minimum": 0 },
+        "passed": { "type": "boolean" },
+        "tested_at": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

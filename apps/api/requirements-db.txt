@@ -1,0 +1,2 @@
+# Memoria por artista y catálogo de tribus (Postgres + pgvector).
+psycopg[binary]>=3.2

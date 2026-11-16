@@ -1,0 +1,16 @@
+# API y cola
+fastapi>=0.115
+uvicorn[standard]>=0.32
+python-multipart>=0.0.12
+rq>=2.0
+redis>=5.0
+# Audio (funciona en Windows, macOS y Linux)
+numpy>=1.26,<3
+scipy>=1.11
+librosa>=0.10.2
+soundfile>=0.12
+pyloudnorm>=0.1.1
+# Contrato y pruebas
+jsonschema>=4.23
+pytest>=8.0
+httpx>=0.27

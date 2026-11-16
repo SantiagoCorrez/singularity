@@ -1,0 +1,5 @@
+# Modelos de emoción. Solo hay ruedas para Linux y macOS: en Windows se usa Docker.
+# AVISO DE LICENCIA: Essentia es AGPLv3 y sus modelos preentrenados se publican como
+# CC BY-NC-SA 4.0 (uso no comercial). Un uso comercial requiere licencia de la UPF/MTG.
+essentia-tensorflow
+numpy<2

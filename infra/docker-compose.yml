@@ -1,0 +1,55 @@
+# Backend en Linux: API + worker de análisis + Redis + Postgres con pgvector.
+#   docker compose -f infra/docker-compose.yml up --build
+# La base de datos no se publica fuera de la red de Docker. S3 llegará cuando haga falta.
+name: singularity
+
+x-api: &api
+  build:
+    context: ..
+    dockerfile: apps/api/Dockerfile
+  # Opcional: infra/.env con ANTHROPIC_API_KEY=... activa el análisis de la letra.
+  env_file:
+    - path: .env
+      required: false
+  environment:
+    SINGULARITY_QUEUE: rq
+    REDIS_URL: redis://redis:6379/0
+    DATABASE_URL: postgresql://singularity:singularity@db:5432/singularity
+  volumes:
+    - ../apps/api/data:/data
+    - ../apps/api/models:/models:ro
+  depends_on:
+    redis:
+      condition: service_started
+    db:
+      condition: service_healthy
+
+services:
+  api:
+    <<: *api
+    ports:
+      - "127.0.0.1:8010:8000"
+
+  worker:
+    <<: *api
+    command: ["rq", "worker", "analysis", "--url", "redis://redis:6379/0"]
+
+  redis:
+    image: redis:7-alpine
+
+  db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: singularity
+      POSTGRES_PASSWORD: singularity
+      POSTGRES_DB: singularity
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U singularity"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  pgdata:

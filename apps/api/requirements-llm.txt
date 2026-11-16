@@ -1,0 +1,2 @@
+# Análisis de la letra con Claude. Va aparte para no reinstalar las dependencias de audio al cambiarlo.
+anthropic>=1.0
